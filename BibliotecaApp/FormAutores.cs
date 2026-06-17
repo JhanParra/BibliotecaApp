@@ -28,6 +28,17 @@ namespace BibliotecaApp
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
             if (!Validar()) return;
+
+            // ── Validación de duplicado ──
+            if (repositorio.Existe(txtNombre.Text, txtApellido.Text))
+            {
+                MessageBox.Show(
+                    $"⚠ Ya existe un autor registrado con el nombre '{txtNombre.Text.Trim()} {txtApellido.Text.Trim()}'.\n\n" +
+                    "No se permiten autores duplicados.",
+                    "Autor Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Autor a = new Autor(txtNombre.Text.Trim(), txtApellido.Text.Trim());
             if (a.Registrar()) { MessageBox.Show("✅ Autor registrado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information); Limpiar(); Cargar(); }
             else MessageBox.Show("Error al registrar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -37,6 +48,17 @@ namespace BibliotecaApp
         {
             if (selectedID == 0) { MessageBox.Show("Seleccione un autor.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (!Validar()) return;
+
+            // ── Validación de duplicado (excluyendo el propio registro) ──
+            if (repositorio.Existe(txtNombre.Text, txtApellido.Text, selectedID))
+            {
+                MessageBox.Show(
+                    $"⚠ Ya existe OTRO autor registrado con el nombre '{txtNombre.Text.Trim()} {txtApellido.Text.Trim()}'.\n\n" +
+                    "No se permiten autores duplicados.",
+                    "Autor Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Autor a = new Autor(txtNombre.Text.Trim(), txtApellido.Text.Trim()); a.AutorID = selectedID;
             if (a.Actualizar()) { MessageBox.Show("✅ Autor actualizado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information); Limpiar(); Cargar(); }
             else MessageBox.Show("Error al actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

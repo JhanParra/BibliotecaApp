@@ -21,6 +21,17 @@ namespace BibliotecaApp
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text)) { MessageBox.Show("Ingrese el nombre.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+
+            // ── Validación de duplicado ──
+            if (repositorio.Existe(txtNombre.Text))
+            {
+                MessageBox.Show(
+                    $"⚠ Ya existe la categoría '{txtNombre.Text.Trim()}'.\n\n" +
+                    "No se permiten categorías duplicadas.",
+                    "Categoría Duplicada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Categoria c = new Categoria(txtNombre.Text.Trim());
             if (c.Registrar()) { MessageBox.Show("✅ Categoría registrada.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information); Limpiar(); Cargar(); }
             else MessageBox.Show("Error al registrar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -29,6 +40,18 @@ namespace BibliotecaApp
         private void btnEditar_Click(object sender, EventArgs e)
         {
             if (selectedID == 0) { MessageBox.Show("Seleccione una categoría.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            if (string.IsNullOrWhiteSpace(txtNombre.Text)) { MessageBox.Show("Ingrese el nombre.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+
+            // ── Validación de duplicado (excluyendo el propio registro) ──
+            if (repositorio.Existe(txtNombre.Text, selectedID))
+            {
+                MessageBox.Show(
+                    $"⚠ Ya existe OTRA categoría llamada '{txtNombre.Text.Trim()}'.\n\n" +
+                    "No se permiten categorías duplicadas.",
+                    "Categoría Duplicada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Categoria c = new Categoria(txtNombre.Text.Trim()); c.CategoriaID = selectedID;
             if (c.Actualizar()) { MessageBox.Show("✅ Categoría actualizada.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information); Limpiar(); Cargar(); }
             else MessageBox.Show("Error al actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

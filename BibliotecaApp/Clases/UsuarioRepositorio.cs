@@ -64,5 +64,19 @@ namespace BibliotecaApp.Clases
                 return dt;
             }
         }
+
+        // ── Valida si ya existe un usuario con ese DNI ──
+        // El DNI es PK, así que esto se usa solo para REGISTRO (nunca en edición, el DNI no cambia)
+        public bool ExisteDNI(string dni)
+        {
+            string query = "SELECT COUNT(*) FROM USUARIO WHERE DNI = @dni";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@dni", dni.Trim());
+                try { con.Open(); return Convert.ToInt32(cmd.ExecuteScalar()) > 0; }
+                catch (Exception ex) { MessageBox.Show("Error Usuario ExisteDNI: " + ex.Message); return false; }
+            }
+        }
     }
 }

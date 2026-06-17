@@ -21,6 +21,17 @@ namespace BibliotecaApp
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text)) { MessageBox.Show("Ingrese el nombre.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+
+            // ── Validación de duplicado ──
+            if (repositorio.Existe(txtNombre.Text))
+            {
+                MessageBox.Show(
+                    $"⚠ Ya existe la editorial '{txtNombre.Text.Trim()}'.\n\n" +
+                    "No se permiten editoriales duplicadas.",
+                    "Editorial Duplicada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Editorial ed = new Editorial(txtNombre.Text.Trim());
             if (ed.Registrar()) { MessageBox.Show("✅ Editorial registrada.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information); Limpiar(); Cargar(); }
             else MessageBox.Show("Error al registrar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -29,6 +40,18 @@ namespace BibliotecaApp
         private void btnEditar_Click(object sender, EventArgs e)
         {
             if (selectedID == 0) { MessageBox.Show("Seleccione una editorial.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+            if (string.IsNullOrWhiteSpace(txtNombre.Text)) { MessageBox.Show("Ingrese el nombre.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
+
+            // ── Validación de duplicado (excluyendo el propio registro) ──
+            if (repositorio.Existe(txtNombre.Text, selectedID))
+            {
+                MessageBox.Show(
+                    $"⚠ Ya existe OTRA editorial llamada '{txtNombre.Text.Trim()}'.\n\n" +
+                    "No se permiten editoriales duplicadas.",
+                    "Editorial Duplicada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Editorial ed = new Editorial(txtNombre.Text.Trim()); ed.EditorialID = selectedID;
             if (ed.Actualizar()) { MessageBox.Show("✅ Editorial actualizada.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information); Limpiar(); Cargar(); }
             else MessageBox.Show("Error al actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -47,6 +47,27 @@ namespace BibliotecaApp
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
             if (!Validar()) return;
+
+            // ── Validación de ISBN duplicado ──
+            if (libroRepo.ExisteISBN(txtISBN.Text))
+            {
+                MessageBox.Show(
+                    $"⚠ Ya existe un libro registrado con el ISBN '{txtISBN.Text.Trim()}'.\n\n" +
+                    "No se permiten libros duplicados.",
+                    "ISBN Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // ── Validación de Título duplicado ──
+            if (libroRepo.ExisteTitulo(txtTitulo.Text))
+            {
+                MessageBox.Show(
+                    $"⚠ Ya existe un libro registrado con el título '{txtTitulo.Text.Trim()}'.\n\n" +
+                    "No se permiten libros duplicados.",
+                    "Título Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Libro l = new Libro(txtISBN.Text, txtTitulo.Text.Trim(), Convert.ToInt32(cmbAutor.SelectedValue), Convert.ToInt32(cmbCategoria.SelectedValue), Convert.ToInt32(cmbEditorial.SelectedValue), int.Parse(txtStock.Text));
             if (l.Registrar()) { MessageBox.Show("✅ Libro registrado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information); Limpiar(); Cargar(); }
             else MessageBox.Show("Error al registrar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -56,6 +77,27 @@ namespace BibliotecaApp
         {
             if (string.IsNullOrEmpty(selectedISBN)) { MessageBox.Show("Seleccione un libro.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (!Validar()) return;
+
+            // ── Validación de ISBN duplicado (excluyendo el propio registro) ──
+            if (libroRepo.ExisteISBN(txtISBN.Text, selectedISBN))
+            {
+                MessageBox.Show(
+                    $"⚠ Ya existe OTRO libro con el ISBN '{txtISBN.Text.Trim()}'.\n\n" +
+                    "No se permiten libros duplicados.",
+                    "ISBN Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // ── Validación de Título duplicado (excluyendo el propio registro) ──
+            if (libroRepo.ExisteTitulo(txtTitulo.Text, selectedISBN))
+            {
+                MessageBox.Show(
+                    $"⚠ Ya existe OTRO libro con el título '{txtTitulo.Text.Trim()}'.\n\n" +
+                    "No se permiten libros duplicados.",
+                    "Título Duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Libro l = new Libro(selectedISBN, txtTitulo.Text.Trim(), Convert.ToInt32(cmbAutor.SelectedValue), Convert.ToInt32(cmbCategoria.SelectedValue), Convert.ToInt32(cmbEditorial.SelectedValue), int.Parse(txtStock.Text));
             if (l.Actualizar()) { MessageBox.Show("✅ Libro actualizado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information); Limpiar(); Cargar(); }
             else MessageBox.Show("Error al actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

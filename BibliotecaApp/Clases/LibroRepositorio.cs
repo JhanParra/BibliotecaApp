@@ -101,5 +101,39 @@ namespace BibliotecaApp.Clases
                 return dt;
             }
         }
+
+        // ── Valida si ya existe un libro con el mismo ISBN ──
+        public bool ExisteISBN(string isbn, string isbnExcluir = "")
+        {
+            string query = @"SELECT COUNT(*) FROM LIBRO
+                              WHERE LTRIM(RTRIM(ISBN)) = @isbn
+                                AND Estado = 1
+                                AND ISBN <> @isbnExcluir";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@isbn", isbn.Trim());
+                cmd.Parameters.AddWithValue("@isbnExcluir", isbnExcluir ?? "");
+                try { con.Open(); return Convert.ToInt32(cmd.ExecuteScalar()) > 0; }
+                catch (Exception ex) { MessageBox.Show("Error Libro ExisteISBN: " + ex.Message); return false; }
+            }
+        }
+
+        // ── Valida si ya existe un libro con el mismo Título (opcional, además del ISBN) ──
+        public bool ExisteTitulo(string titulo, string isbnExcluir = "")
+        {
+            string query = @"SELECT COUNT(*) FROM LIBRO
+                              WHERE LTRIM(RTRIM(Titulo)) = @titulo
+                                AND Estado = 1
+                                AND ISBN <> @isbnExcluir";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@titulo", titulo.Trim());
+                cmd.Parameters.AddWithValue("@isbnExcluir", isbnExcluir ?? "");
+                try { con.Open(); return Convert.ToInt32(cmd.ExecuteScalar()) > 0; }
+                catch (Exception ex) { MessageBox.Show("Error Libro ExisteTitulo: " + ex.Message); return false; }
+            }
+        }
     }
 }

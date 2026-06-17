@@ -59,5 +59,22 @@ namespace BibliotecaApp.Clases
                 return dt;
             }
         }
+
+        // ── Valida si ya existe una editorial con el mismo Nombre ──
+        public bool Existe(string nombre, int idExcluir = 0)
+        {
+            string query = @"SELECT COUNT(*) FROM EDITORIAL
+                              WHERE LTRIM(RTRIM(Nombre)) = @nombre
+                                AND Estado = 1
+                                AND editorialID <> @idExcluir";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@nombre", nombre.Trim());
+                cmd.Parameters.AddWithValue("@idExcluir", idExcluir);
+                try { con.Open(); return Convert.ToInt32(cmd.ExecuteScalar()) > 0; }
+                catch (Exception ex) { MessageBox.Show("Error Editorial Existe: " + ex.Message); return false; }
+            }
+        }
     }
 }

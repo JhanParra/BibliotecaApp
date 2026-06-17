@@ -61,5 +61,25 @@ namespace BibliotecaApp.Clases
                 return dt;
             }
         }
+
+        // ── Valida si ya existe un autor con el mismo Nombre + Apellido ──
+        // idExcluir: al editar, excluye el propio registro de la validación
+        public bool Existe(string nombre, string apellido, int idExcluir = 0)
+        {
+            string query = @"SELECT COUNT(*) FROM AUTOR
+                              WHERE LTRIM(RTRIM(Nombre)) = @nombre
+                                AND LTRIM(RTRIM(Apellido)) = @apellido
+                                AND Estado = 1
+                                AND autorID <> @idExcluir";
+            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlCommand cmd = new SqlCommand(query, con))
+            {
+                cmd.Parameters.AddWithValue("@nombre", nombre.Trim());
+                cmd.Parameters.AddWithValue("@apellido", apellido.Trim());
+                cmd.Parameters.AddWithValue("@idExcluir", idExcluir);
+                try { con.Open(); return Convert.ToInt32(cmd.ExecuteScalar()) > 0; }
+                catch (Exception ex) { MessageBox.Show("Error Autor Existe: " + ex.Message); return false; }
+            }
+        }
     }
 }
