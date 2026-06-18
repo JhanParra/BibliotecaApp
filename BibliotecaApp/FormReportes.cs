@@ -9,7 +9,7 @@ namespace BibliotecaApp
     public partial class FormReportes : Form
     {
         private PrestamoRepositorio repositorio = new PrestamoRepositorio();
-        private string reporteActual = ""; // "fecha" o "usuarios" — para saber qué recargar al filtrar por estado
+        private string reporteActual = ""; // "fecha" o "usuarios" para saber qué recargar al filtrar por estado
 
         public FormReportes() { InitializeComponent(); }
 
@@ -19,7 +19,7 @@ namespace BibliotecaApp
             dtpDesde.Value = DateTime.Today.AddMonths(-1);
             dtpHasta.Value = DateTime.Today;
 
-            // ── Combo de filtro por Estado ──
+            //Combo de filtro por Estado
             cmbEstado.Items.Clear();
             cmbEstado.Items.Add("Todos");
             cmbEstado.Items.Add("Activo");
@@ -48,14 +48,14 @@ namespace BibliotecaApp
             dgv.DataSource = repositorio.ReporteUsuariosMasPrestamos();
         }
 
-        // ── Recarga el reporte de fechas aplicando el filtro de Estado ──
+        //Recarga el reporte de fechas aplicando el filtro de Estado
         private void CargarReporteFecha()
         {
             DataTable dt = repositorio.ReporteLibrosPorFecha(dtpDesde.Value.Date, dtpHasta.Value.Date);
             dgv.DataSource = FiltrarPorEstado(dt);
         }
 
-        // ── Filtra el DataTable según el Estado seleccionado ──
+        //Filtra el DataTable según el Estado seleccionado
         private DataTable FiltrarPorEstado(DataTable origen)
         {
             string estado = cmbEstado.SelectedItem?.ToString() ?? "Todos";
@@ -70,7 +70,7 @@ namespace BibliotecaApp
             return filtrado;
         }
 
-        // ── Al cambiar el filtro de Estado, recarga el reporte activo ──
+        //Al cambiar el filtro de Estado, recarga el reporte activo
         private void cmbEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (reporteActual == "fecha")
@@ -78,7 +78,7 @@ namespace BibliotecaApp
             // El reporte de "usuarios" no tiene columna Estado, no se filtra
         }
 
-        // ── Exportar a Excel el contenido actual del DataGridView ──
+        //Exportar a Excel el contenido actual del DataGridView
         private void btnExportarExcel_Click(object sender, EventArgs e)
         {
             if (dgv.DataSource == null || dgv.Rows.Count == 0)
@@ -111,7 +111,7 @@ namespace BibliotecaApp
             }
         }
 
-        // ── Lógica de exportación usando ClosedXML ──
+        //Lógica de exportación usando ClosedXML
         private void ExportarDataGridViewAExcel(DataGridView grid, string rutaArchivo, string tituloHoja)
         {
             using (var workbook = new ClosedXML.Excel.XLWorkbook())
