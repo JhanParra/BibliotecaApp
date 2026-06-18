@@ -27,26 +27,40 @@ namespace BibliotecaApp
             dtpDevolucion.MinDate = DateTime.Today.AddDays(1);
             dtpDevolucion.Value   = DateTime.Today.AddDays(7);
 
-            cmbUsuario.DisplayMember   = "DNI";    cmbUsuario.ValueMember   = "DNI";         cmbUsuario.DataSource   = usuarioRepo.ObtenerTodos();
+            // ── Combo de usuario muestra SOLO Nombre + Apellido ──
+            DataTable usuarios = usuarioRepo.ObtenerTodos();
+            usuarios.Columns.Add("NombreCompleto", typeof(string));
+            foreach (DataRow row in usuarios.Rows)
+                row["NombreCompleto"] = $"{row["Nombre"]} {row["Apellido"]}";
+
+            cmbUsuario.DisplayMember = "NombreCompleto";
+            cmbUsuario.ValueMember   = "DNI";
+            cmbUsuario.DataSource    = usuarios;
+
             cmbCategoria.DisplayMember = "Nombre"; cmbCategoria.ValueMember = "categoriaID"; cmbCategoria.DataSource = catRepo.ObtenerTodos();
 
             cargando = false;
             ActualizarInfoUsuario();
         }
 
-        // ── Búsqueda por DNI ─────────────────────────────────
+        // ── Búsqueda por DNI (arriba) ──────────────────────────
+        // Solo autoselecciona cuando el DNI ya está completo (8 dígitos).
+        // Mientras se está escribiendo, NO toca el combo ni reescribe el texto.
         private void txtBuscarDNI_TextChanged(object sender, EventArgs e)
         {
             if (cargando) return;
             string dni = txtBuscarDNI.Text.Trim();
-            if (string.IsNullOrEmpty(dni)) return;
 
-            // Buscar en el combo
+            if (dni.Length < 8) return; // todavía escribiendo, no buscar aún
+
             foreach (DataRowView row in cmbUsuario.Items)
             {
-                if (row["DNI"].ToString().StartsWith(dni))
+                if (row["DNI"].ToString() == dni)
                 {
+                    cargando = true;
                     cmbUsuario.SelectedItem = row;
+                    cargando = false;
+                    ActualizarInfoUsuario();
                     break;
                 }
             }
@@ -54,7 +68,6 @@ namespace BibliotecaApp
 
         private void txtBuscarDNI_KeyDown(object sender, KeyEventArgs e)
         {
-            // Al presionar Enter busca el DNI exacto
             if (e.KeyCode == Keys.Enter)
             {
                 string dni = txtBuscarDNI.Text.Trim();
@@ -63,7 +76,10 @@ namespace BibliotecaApp
                 {
                     if (row["DNI"].ToString() == dni)
                     {
+                        cargando = true;
                         cmbUsuario.SelectedItem = row;
+                        cargando = false;
+                        ActualizarInfoUsuario();
                         encontrado = true;
                         break;
                     }
@@ -79,9 +95,13 @@ namespace BibliotecaApp
             if (cmbUsuario.SelectedValue == null) return;
             string dni = cmbUsuario.SelectedValue.ToString();
 
-            // Sincronizar el txtBuscarDNI con el combo
+            // Sincronizar el txtBuscarDNI con el combo (sin re-disparar el evento)
             if (txtBuscarDNI.Text != dni)
+            {
+                cargando = true;
                 txtBuscarDNI.Text = dni;
+                cargando = false;
+            }
 
             using (System.Data.SqlClient.SqlConnection con =
                 new System.Data.SqlClient.SqlConnection("Server=localhost;Database=BDBIBLIOTECA;Trusted_Connection=True;"))
@@ -151,7 +171,6 @@ namespace BibliotecaApp
                 }
             }
 
-            // Cargar tabla de préstamos del usuario
             CargarPrestamosUsuario(dni);
         }
 
@@ -189,7 +208,6 @@ namespace BibliotecaApp
                         da.Fill(dt);
                         dgvPrestamos.DataSource = dt;
 
-                        // Colorear filas vencidas
                         foreach (DataGridViewRow fila in dgvPrestamos.Rows)
                         {
                             if (Convert.ToInt32(fila.Cells["Días Retraso"].Value) > 0)
@@ -199,7 +217,6 @@ namespace BibliotecaApp
                             }
                         }
 
-                        // Mostrar u ocultar según si hay datos
                         pnlTabla.Visible = dt.Rows.Count > 0;
                         lblTablaTitulo.Text = dt.Rows.Count > 0
                             ? $"📋 Historial de préstamos del usuario ({dt.Rows.Count} registro(s))"
@@ -303,11 +320,8 @@ namespace BibliotecaApp
                 MessageBox.Show("✅ Préstamo registrado correctamente.", "Éxito",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // Refrescar tabla y estado del usuario
-                string dni = cmbUsuario.SelectedValue.ToString();
                 ActualizarInfoUsuario();
 
-                // Resetear libro
                 cargando = true;
                 cmbLibro.DataSource   = null;
                 dtpDevolucion.MaxDate = FECHA_MAX;

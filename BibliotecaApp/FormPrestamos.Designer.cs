@@ -19,6 +19,7 @@ namespace BibliotecaApp
             this.pnlFormulario    = new System.Windows.Forms.Panel();
             this.lblDNIBuscar     = new System.Windows.Forms.Label();
             this.txtBuscarDNI     = new System.Windows.Forms.TextBox();
+            this.lblOpciones      = new System.Windows.Forms.Label();
             this.lblUsuario       = new System.Windows.Forms.Label();
             this.lblCategoria     = new System.Windows.Forms.Label();
             this.lblLibro         = new System.Windows.Forms.Label();
@@ -72,7 +73,7 @@ namespace BibliotecaApp
             this.pnlFormulario.Location  = new System.Drawing.Point(15, 115);
             this.pnlFormulario.Size      = new System.Drawing.Size(650, 285);
 
-            // Buscar por DNI
+            // Buscar por DNI (arriba)
             this.lblDNIBuscar.Text     = "Buscar DNI:";
             this.lblDNIBuscar.Font     = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblDNIBuscar.Location = new System.Drawing.Point(15, 18);
@@ -87,15 +88,13 @@ namespace BibliotecaApp
             this.txtBuscarDNI.TextChanged    += new System.EventHandler(this.txtBuscarDNI_TextChanged);
             this.txtBuscarDNI.KeyDown        += new System.Windows.Forms.KeyEventHandler(this.txtBuscarDNI_KeyDown);
 
-            // Separador visual
-            System.Windows.Forms.Label lblOpciones = new System.Windows.Forms.Label();
-            lblOpciones.Text      = "o seleccione:";
-            lblOpciones.Font      = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Italic);
-            lblOpciones.ForeColor = System.Drawing.Color.Gray;
-            lblOpciones.Location  = new System.Drawing.Point(275, 19);
-            lblOpciones.AutoSize  = true;
+            this.lblOpciones.Text      = "o seleccione abajo:";
+            this.lblOpciones.Font      = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Italic);
+            this.lblOpciones.ForeColor = System.Drawing.Color.Gray;
+            this.lblOpciones.Location  = new System.Drawing.Point(275, 19);
+            this.lblOpciones.AutoSize  = true;
 
-            // Usuario combo
+            // Usuario combo — muestra SOLO el nombre
             this.lblUsuario.Text     = "Usuario:";
             this.lblUsuario.Font     = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblUsuario.Location = new System.Drawing.Point(15, 55);
@@ -220,7 +219,7 @@ namespace BibliotecaApp
 
         private System.Windows.Forms.Panel          pnlHeader, pnlAlertaUsuario, pnlFormulario, pnlTabla;
         private System.Windows.Forms.Label          lblTitulo, lblSubtitulo, lblAlertaUsuario;
-        private System.Windows.Forms.Label          lblDNIBuscar, lblUsuario, lblCategoria, lblLibro;
+        private System.Windows.Forms.Label          lblDNIBuscar, lblOpciones, lblUsuario, lblCategoria, lblLibro;
         private System.Windows.Forms.Label          lblStock, lblDevolucion, lblDiasInfo, lblTablaTitulo;
         private System.Windows.Forms.TextBox        txtBuscarDNI;
         private System.Windows.Forms.ComboBox       cmbUsuario, cmbCategoria, cmbLibro;
