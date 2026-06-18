@@ -23,8 +23,11 @@ namespace BibliotecaApp
             this.dtpDesde                = new System.Windows.Forms.DateTimePicker();
             this.dtpHasta                = new System.Windows.Forms.DateTimePicker();
             this.btnFiltrar              = new System.Windows.Forms.Button();
+            this.lblEstado               = new System.Windows.Forms.Label();
+            this.cmbEstado               = new System.Windows.Forms.ComboBox();
             this.pnlReporte              = new System.Windows.Forms.Panel();
             this.lblReporte              = new System.Windows.Forms.Label();
+            this.btnExportarExcel        = new System.Windows.Forms.Button();
             this.dgv                     = new System.Windows.Forms.DataGridView();
             this.SuspendLayout();
 
@@ -73,7 +76,7 @@ namespace BibliotecaApp
 
             this.pnlBotones.Controls.AddRange(new System.Windows.Forms.Control[] { btnLibrosPorFecha, btnUsuariosMasPrestamos });
 
-            // Panel fechas
+            // Panel fechas (+ filtro Estado)
             this.pnlFechas.BackColor = System.Drawing.Color.FromArgb(236, 240, 241);
             this.pnlFechas.Location  = new System.Drawing.Point(15, 150);
             this.pnlFechas.Size      = new System.Drawing.Size(830, 45);
@@ -99,7 +102,7 @@ namespace BibliotecaApp
 
             this.btnFiltrar.Text      = "Filtrar";
             this.btnFiltrar.Location  = new System.Drawing.Point(465, 10);
-            this.btnFiltrar.Size      = new System.Drawing.Size(100, 28);
+            this.btnFiltrar.Size      = new System.Drawing.Size(80, 28);
             this.btnFiltrar.Font      = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnFiltrar.BackColor = System.Drawing.Color.FromArgb(41, 128, 185);
             this.btnFiltrar.ForeColor = System.Drawing.Color.White;
@@ -108,9 +111,23 @@ namespace BibliotecaApp
             this.btnFiltrar.Cursor    = System.Windows.Forms.Cursors.Hand;
             this.btnFiltrar.Click    += new System.EventHandler(this.btnLibrosPorFecha_Click);
 
-            this.pnlFechas.Controls.AddRange(new System.Windows.Forms.Control[] { lblDesde, dtpDesde, lblHasta, dtpHasta, btnFiltrar });
+            // ── Nuevo: filtro por Estado ──
+            this.lblEstado.Text     = "Estado:";
+            this.lblEstado.Font     = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblEstado.Location = new System.Drawing.Point(560, 13);
+            this.lblEstado.AutoSize = true;
 
-            // Panel título reporte
+            this.cmbEstado.Location      = new System.Drawing.Point(615, 10);
+            this.cmbEstado.Size          = new System.Drawing.Size(110, 25);
+            this.cmbEstado.Font          = new System.Drawing.Font("Segoe UI", 9F);
+            this.cmbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbEstado.FlatStyle     = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbEstado.SelectedIndexChanged += new System.EventHandler(this.cmbEstado_SelectedIndexChanged);
+
+            this.pnlFechas.Controls.AddRange(new System.Windows.Forms.Control[] {
+                lblDesde, dtpDesde, lblHasta, dtpHasta, btnFiltrar, lblEstado, cmbEstado });
+
+            // Panel título reporte (+ botón Exportar Excel)
             this.pnlReporte.BackColor = System.Drawing.Color.FromArgb(41, 128, 185);
             this.pnlReporte.Location  = new System.Drawing.Point(15, 205);
             this.pnlReporte.Size      = new System.Drawing.Size(830, 35);
@@ -119,7 +136,20 @@ namespace BibliotecaApp
             this.lblReporte.ForeColor = System.Drawing.Color.White;
             this.lblReporte.Location  = new System.Drawing.Point(15, 8);
             this.lblReporte.AutoSize  = true;
-            this.pnlReporte.Controls.Add(lblReporte);
+
+            // ── Nuevo: botón Exportar a Excel ──
+            this.btnExportarExcel.Text      = "📊  Exportar a Excel";
+            this.btnExportarExcel.Font      = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnExportarExcel.BackColor = System.Drawing.Color.FromArgb(33, 115, 70);
+            this.btnExportarExcel.ForeColor = System.Drawing.Color.White;
+            this.btnExportarExcel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExportarExcel.FlatAppearance.BorderSize = 0;
+            this.btnExportarExcel.Size      = new System.Drawing.Size(150, 27);
+            this.btnExportarExcel.Location  = new System.Drawing.Point(665, 4);
+            this.btnExportarExcel.Cursor    = System.Windows.Forms.Cursors.Hand;
+            this.btnExportarExcel.Click    += new System.EventHandler(this.btnExportarExcel_Click);
+
+            this.pnlReporte.Controls.AddRange(new System.Windows.Forms.Control[] { lblReporte, btnExportarExcel });
 
             // DataGridView
             this.dgv.Location            = new System.Drawing.Point(15, 250);
@@ -144,9 +174,10 @@ namespace BibliotecaApp
         }
 
         private System.Windows.Forms.Panel          pnlHeader, pnlBotones, pnlFechas, pnlReporte;
-        private System.Windows.Forms.Label          lblTitulo, lblSubtitulo, lblDesde, lblHasta, lblReporte;
+        private System.Windows.Forms.Label          lblTitulo, lblSubtitulo, lblDesde, lblHasta, lblReporte, lblEstado;
         private System.Windows.Forms.DateTimePicker dtpDesde, dtpHasta;
-        private System.Windows.Forms.Button         btnLibrosPorFecha, btnUsuariosMasPrestamos, btnFiltrar;
+        private System.Windows.Forms.ComboBox       cmbEstado;
+        private System.Windows.Forms.Button         btnLibrosPorFecha, btnUsuariosMasPrestamos, btnFiltrar, btnExportarExcel;
         private System.Windows.Forms.DataGridView   dgv;
     }
 }
