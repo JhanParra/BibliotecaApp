@@ -106,13 +106,24 @@ namespace BibliotecaApp.Clases
         }
 
         // Reporte 1: Libros prestados por fecha
+        // ── CORRECCIÓN: la multa ahora se calcula correctamente para préstamos
+        //    activos vencidos (multa estimada en vivo) y para los ya devueltos
+        //    (multa real cobrada en el momento de la devolución).
         public DataTable ReporteLibrosPorFecha(DateTime desde, DateTime hasta)
         {
             string query = @"SELECT L.Titulo, L.ISBN,
                                     U.Nombre + ' ' + U.Apellido AS Usuario,
                                     P.FechaPrestamo, P.FechaDevolucion,
                                     P.FechaDevolucionReal, P.Estado,
-                                    P.Multa
+                                    CASE
+                                        -- Ya devuelto: usa la multa real que se cobró
+                                        WHEN P.Estado = 'Devuelto' THEN ISNULL(P.Multa, 0)
+                                        -- Activo y vencido: calcula la multa estimada a la fecha de hoy
+                                        WHEN P.Estado = 'Activo' AND P.FechaDevolucion < GETDATE()
+                                            THEN DATEDIFF(DAY, P.FechaDevolucion, GETDATE()) * 1.50
+                                        -- Activo y no vencido: sin multa
+                                        ELSE 0
+                                    END AS Multa
                              FROM PRESTAMO P
                              INNER JOIN LIBRO   L ON P.libroID     = L.libroID
                              INNER JOIN USUARIO U ON P.DNI_Usuario = U.DNI
@@ -132,13 +143,22 @@ namespace BibliotecaApp.Clases
         }
 
         // Reporte 2: Usuarios con más préstamos
+        // ── CORRECCIÓN: TotalMultas ahora suma también la multa estimada
+        //    de los préstamos activos vencidos, no solo las ya cobradas.
         public DataTable ReporteUsuariosMasPrestamos()
         {
             string query = @"SELECT U.DNI,
                                     U.Nombre + ' ' + U.Apellido AS Usuario,
                                     U.Telefono,
                                     COUNT(P.prestamoID)          AS TotalPrestamos,
-                                    SUM(ISNULL(P.Multa, 0))      AS TotalMultas,
+                                    SUM(
+                                        CASE
+                                            WHEN P.Estado = 'Devuelto' THEN ISNULL(P.Multa, 0)
+                                            WHEN P.Estado = 'Activo' AND P.FechaDevolucion < GETDATE()
+                                                THEN DATEDIFF(DAY, P.FechaDevolucion, GETDATE()) * 1.50
+                                            ELSE 0
+                                        END
+                                    ) AS TotalMultas,
                                     SUM(CASE WHEN P.Estado='Activo' AND P.FechaDevolucion < GETDATE()
                                              THEN 1 ELSE 0 END)  AS PrestamosVencidos
                              FROM PRESTAMO P
