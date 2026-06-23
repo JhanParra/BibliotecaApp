@@ -43,13 +43,15 @@ namespace BibliotecaApp
             ActualizarInfoUsuario();
         }
 
-        //Búsqueda por DNI (arriba)
+        // ── Búsqueda por DNI (arriba) ──────────────────────────
+        // Solo autoselecciona cuando el DNI ya está completo (8 dígitos).
+        // Mientras se está escribiendo, NO toca el combo ni reescribe el texto.
         private void txtBuscarDNI_TextChanged(object sender, EventArgs e)
         {
             if (cargando) return;
             string dni = txtBuscarDNI.Text.Trim();
 
-            if (dni.Length < 8) return;
+            if (dni.Length < 8) return; // todavía escribiendo, no buscar aún
 
             foreach (DataRowView row in cmbUsuario.Items)
             {
@@ -93,7 +95,7 @@ namespace BibliotecaApp
             if (cmbUsuario.SelectedValue == null) return;
             string dni = cmbUsuario.SelectedValue.ToString();
 
-            //Sincronizar el txtBuscarDNI con el combo
+            // Sincronizar el txtBuscarDNI con el combo (sin re-disparar el evento)
             if (txtBuscarDNI.Text != dni)
             {
                 cargando = true;
@@ -108,9 +110,9 @@ namespace BibliotecaApp
                     SELECT
                         COUNT(CASE WHEN Estado='Activo' THEN 1 END) AS LibrosActivos,
                         COUNT(CASE WHEN Estado='Activo' AND FechaDevolucion < GETDATE() THEN 1 END) AS Vencidos,
-                        SUM(CASE WHEN Estado='Activo' AND FechaDevolucion < GETDATE()
+                        ISNULL(SUM(CASE WHEN Estado='Activo' AND FechaDevolucion < GETDATE()
                                  THEN DATEDIFF(DAY, FechaDevolucion, GETDATE()) * 1.50
-                                 ELSE 0 END) AS MultaAcumulada
+                                 ELSE 0 END), 0) AS MultaAcumulada
                     FROM PRESTAMO WHERE DNI_Usuario = @dni";
 
                 using (System.Data.SqlClient.SqlCommand cmd =
