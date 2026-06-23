@@ -341,6 +341,7 @@ namespace BibliotecaApp
             pnlAlerta.Size = new Size(1538, 32);
             pnlAlerta.TabIndex = 1;
             pnlAlerta.Visible = false;
+            pnlAlerta.Paint += pnlAlerta_Paint;
             // 
             // lblAlerta
             // 

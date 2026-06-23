@@ -17,7 +17,7 @@ namespace BibliotecaApp
 
         private void FormMenu_Load(object sender, EventArgs e)
         {
-            this.WindowState     = FormWindowState.Maximized;
+            this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.Sizable;
             ActualizarDashboard();
             CargarPanelBienvenida();
@@ -27,15 +27,15 @@ namespace BibliotecaApp
         {
             // ── Panel principal blanco ────────────────────────
             Panel pnlBienvenida = new Panel();
-            pnlBienvenida.Location  = new Point(20, 255);
-            pnlBienvenida.Size      = new Size(pnlContenido.Width - 40, 280);
-            pnlBienvenida.Anchor    = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            pnlBienvenida.Location = new Point(20, 255);
+            pnlBienvenida.Size = new Size(pnlContenido.Width - 40, 280);
+            pnlBienvenida.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlBienvenida.BackColor = Color.White;
 
             // ── Columna izquierda: Logo ───────────────────────
             PictureBox picLogo = new PictureBox();
             picLogo.Location = new Point(20, 20);
-            picLogo.Size     = new Size(160, 160);
+            picLogo.Size = new Size(160, 160);
             picLogo.SizeMode = PictureBoxSizeMode.Zoom;
             picLogo.BackColor = Color.White;
 
@@ -65,10 +65,10 @@ namespace BibliotecaApp
             {
                 // Si no hay imagen, mostrar emoji grande
                 Label lblEmoji = new Label();
-                lblEmoji.Text      = "📚";
-                lblEmoji.Font      = new Font("Segoe UI", 52F);
-                lblEmoji.Location  = new Point(20, 20);
-                lblEmoji.Size      = new Size(160, 120);
+                lblEmoji.Text = "📚";
+                lblEmoji.Font = new Font("Segoe UI", 52F);
+                lblEmoji.Location = new Point(20, 20);
+                lblEmoji.Size = new Size(160, 120);
                 lblEmoji.TextAlign = ContentAlignment.MiddleCenter;
                 pnlBienvenida.Controls.Add(lblEmoji);
             }
@@ -77,34 +77,34 @@ namespace BibliotecaApp
                 pnlBienvenida.Controls.Add(picLogo);
             }
 
-            // ── Columna derecha: Textos ───────────────────────
+            //Columna derecha: Textos
             Label lblNombre = new Label();
-            lblNombre.Text      = "Biblioteca 'Lectura Veloz'";
-            lblNombre.Font      = new Font("Segoe UI", 18F, FontStyle.Bold);
+            lblNombre.Text = "Biblioteca 'Lectura Veloz'";
+            lblNombre.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             lblNombre.ForeColor = Color.FromArgb(26, 82, 118);
-            lblNombre.Location  = new Point(200, 25);
-            lblNombre.Size      = new Size(700, 38);
+            lblNombre.Location = new Point(200, 25);
+            lblNombre.Size = new Size(700, 38);
 
             Label lblSlogan = new Label();
-            lblSlogan.Text      = "De Sabiduría Acelerada — Gestión integral de préstamos";
-            lblSlogan.Font      = new Font("Segoe UI", 10F, FontStyle.Italic);
+            lblSlogan.Text = "De Sabiduría Acelerada — Gestión integral de préstamos";
+            lblSlogan.Font = new Font("Segoe UI", 10F, FontStyle.Italic);
             lblSlogan.ForeColor = Color.Gray;
-            lblSlogan.Location  = new Point(200, 65);
-            lblSlogan.Size      = new Size(700, 25);
+            lblSlogan.Location = new Point(200, 65);
+            lblSlogan.Size = new Size(700, 25);
 
             // Línea separadora
             Panel pnlLinea = new Panel();
-            pnlLinea.Location  = new Point(200, 98);
-            pnlLinea.Size      = new Size(700, 2);
+            pnlLinea.Location = new Point(200, 98);
+            pnlLinea.Size = new Size(700, 2);
             pnlLinea.BackColor = Color.FromArgb(41, 128, 185);
 
-            // ── Reglas del sistema en 2 columnas ─────────────
+            //Reglas del sistema en 2 columnas
             Label lblTituloReglas = new Label();
-            lblTituloReglas.Text      = "Reglas del sistema:";
-            lblTituloReglas.Font      = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTituloReglas.Text = "Reglas del sistema:";
+            lblTituloReglas.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblTituloReglas.ForeColor = Color.FromArgb(44, 62, 80);
-            lblTituloReglas.Location  = new Point(200, 110);
-            lblTituloReglas.AutoSize  = true;
+            lblTituloReglas.Location = new Point(200, 110);
+            lblTituloReglas.AutoSize = true;
 
             string[] reglas = {
                 "✅  Máximo 2 libros por usuario al mismo tiempo",
@@ -117,28 +117,28 @@ namespace BibliotecaApp
             foreach (string regla in reglas)
             {
                 Label lbl = new Label();
-                lbl.Text      = regla;
-                lbl.Font      = new Font("Segoe UI", 9F);
+                lbl.Text = regla;
+                lbl.Font = new Font("Segoe UI", 9F);
                 lbl.ForeColor = Color.FromArgb(44, 62, 80);
-                lbl.Location  = new Point(200, yRegla);
-                lbl.Size      = new Size(680, 22);
+                lbl.Location = new Point(200, yRegla);
+                lbl.Size = new Size(680, 22);
                 pnlBienvenida.Controls.Add(lbl);
                 yRegla += 26;
             }
 
-            // ── Footer del panel ──────────────────────────────
+            //Footer del panel
             Panel pnlFooter = new Panel();
-            pnlFooter.Location  = new Point(0, 245);
-            pnlFooter.Size      = new Size(pnlBienvenida.Width, 35);
-            pnlFooter.Anchor    = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+            pnlFooter.Location = new Point(0, 245);
+            pnlFooter.Size = new Size(pnlBienvenida.Width, 35);
+            pnlFooter.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             pnlFooter.BackColor = Color.FromArgb(26, 82, 118);
 
             Label lblFooter = new Label();
-            lblFooter.Text      = "  Sistema desarrollado con C# y SQL Server  |  CIBERTEC 2026";
-            lblFooter.Font      = new Font("Segoe UI", 8.5F);
+            lblFooter.Text = "  Sistema desarrollado con C# y SQL Server  |  CIBERTEC 2026";
+            lblFooter.Font = new Font("Segoe UI", 8.5F);
             lblFooter.ForeColor = Color.FromArgb(174, 214, 241);
-            lblFooter.Location  = new Point(10, 9);
-            lblFooter.AutoSize  = true;
+            lblFooter.Location = new Point(10, 9);
+            lblFooter.AutoSize = true;
             pnlFooter.Controls.Add(lblFooter);
 
             pnlBienvenida.Controls.Add(lblNombre);
@@ -158,15 +158,15 @@ namespace BibliotecaApp
                 if (dt.Rows.Count > 0)
                 {
                     DataRow row = dt.Rows[0];
-                    lblTotalLibros.Text       = row["TotalLibros"].ToString();
-                    lblTotalUsuarios.Text     = row["TotalUsuarios"].ToString();
-                    lblPrestamosActivos.Text  = row["PrestamosActivos"].ToString();
+                    lblTotalLibros.Text = row["TotalLibros"].ToString();
+                    lblTotalUsuarios.Text = row["TotalUsuarios"].ToString();
+                    lblPrestamosActivos.Text = row["PrestamosActivos"].ToString();
                     lblPrestamosVencidos.Text = row["PrestamosVencidos"].ToString();
-                    lblMultasRecaudadas.Text  = "S/ " + Convert.ToDecimal(row["TotalMultasRecaudadas"]).ToString("0.00");
+                    lblMultasRecaudadas.Text = "S/ " + Convert.ToDecimal(row["TotalMultasRecaudadas"]).ToString("0.00");
 
                     int vencidos = Convert.ToInt32(row["PrestamosVencidos"]);
                     pnlAlerta.Visible = vencidos > 0;
-                    lblAlerta.Text    = $"⚠  Hay {vencidos} préstamo(s) vencido(s) sin devolver.";
+                    lblAlerta.Text = $"⚠  Hay {vencidos} préstamo(s) vencido(s) sin devolver.";
                 }
             }
             catch { }
@@ -178,20 +178,25 @@ namespace BibliotecaApp
             ActualizarDashboard();
         }
 
-        private void btnAutores_Click(object sender, EventArgs e)      => AbrirForm(new FormAutores());
-        private void btnCategorias_Click(object sender, EventArgs e)   => AbrirForm(new FormCategorias());
-        private void btnEditoriales_Click(object sender, EventArgs e)  => AbrirForm(new FormEditoriales());
-        private void btnLibros_Click(object sender, EventArgs e)       => AbrirForm(new FormLibros());
-        private void btnUsuarios_Click(object sender, EventArgs e)     => AbrirForm(new FormUsuarios());
-        private void btnPrestamos_Click(object sender, EventArgs e)    => AbrirForm(new FormPrestamos());
+        private void btnAutores_Click(object sender, EventArgs e) => AbrirForm(new FormAutores());
+        private void btnCategorias_Click(object sender, EventArgs e) => AbrirForm(new FormCategorias());
+        private void btnEditoriales_Click(object sender, EventArgs e) => AbrirForm(new FormEditoriales());
+        private void btnLibros_Click(object sender, EventArgs e) => AbrirForm(new FormLibros());
+        private void btnUsuarios_Click(object sender, EventArgs e) => AbrirForm(new FormUsuarios());
+        private void btnPrestamos_Click(object sender, EventArgs e) => AbrirForm(new FormPrestamos());
         private void btnDevoluciones_Click(object sender, EventArgs e) => AbrirForm(new FormDevoluciones());
-        private void btnReportes_Click(object sender, EventArgs e)     => AbrirForm(new FormReportes());
+        private void btnReportes_Click(object sender, EventArgs e) => AbrirForm(new FormReportes());
 
         private void btnSalir_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("¿Desea salir del sistema?", "Salir",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 Application.Exit();
+        }
+
+        private void pnlAlerta_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
