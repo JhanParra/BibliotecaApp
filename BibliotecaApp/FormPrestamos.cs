@@ -43,15 +43,13 @@ namespace BibliotecaApp
             ActualizarInfoUsuario();
         }
 
-        // ── Búsqueda por DNI (arriba) ──────────────────────────
-        // Solo autoselecciona cuando el DNI ya está completo (8 dígitos).
-        // Mientras se está escribiendo, NO toca el combo ni reescribe el texto.
+        //Búsqueda por DNI (arriba)
         private void txtBuscarDNI_TextChanged(object sender, EventArgs e)
         {
             if (cargando) return;
             string dni = txtBuscarDNI.Text.Trim();
 
-            if (dni.Length < 8) return; // todavía escribiendo, no buscar aún
+            if (dni.Length < 8) return;
 
             foreach (DataRowView row in cmbUsuario.Items)
             {
@@ -95,7 +93,7 @@ namespace BibliotecaApp
             if (cmbUsuario.SelectedValue == null) return;
             string dni = cmbUsuario.SelectedValue.ToString();
 
-            // Sincronizar el txtBuscarDNI con el combo (sin re-disparar el evento)
+            //Sincronizar el txtBuscarDNI con el combo
             if (txtBuscarDNI.Text != dni)
             {
                 cargando = true;

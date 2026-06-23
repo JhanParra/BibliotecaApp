@@ -65,8 +65,6 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // ── Valida si ya existe un usuario con ese DNI ──
-        // El DNI es PK, así que esto se usa solo para REGISTRO (nunca en edición, el DNI no cambia)
         public bool ExisteDNI(string dni)
         {
             string query = "SELECT COUNT(*) FROM USUARIO WHERE DNI = @dni";

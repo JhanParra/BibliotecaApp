@@ -9,7 +9,7 @@ namespace BibliotecaApp.Clases
     {
         private string connectionString = "Server=localhost;Database=BDBIBLIOTECA;Trusted_Connection=True;";
 
-        // Registra préstamo via SP (valida stock, usuario activo y mora)
+        //Registra préstamo via SP
         public bool Insertar(Prestamo prestamo)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -40,7 +40,7 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // Devuelve libro via SP (calcula multa y restaura stock)
+        //Devuelve libro via SP
         public ResultadoDevolucion MarcarDevuelto(int prestamoID)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -74,7 +74,7 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // Préstamos activos para devolución
+        //Préstamos activos para devolución
         public DataTable ObtenerActivos()
         {
             string query = @"SELECT P.prestamoID,
@@ -105,10 +105,7 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // Reporte 1: Libros prestados por fecha
-        // ── CORRECCIÓN: la multa ahora se calcula correctamente para préstamos
-        //    activos vencidos (multa estimada en vivo) y para los ya devueltos
-        //    (multa real cobrada en el momento de la devolución).
+        //Reporte 1: Libros prestados por fecha
         public DataTable ReporteLibrosPorFecha(DateTime desde, DateTime hasta)
         {
             string query = @"SELECT L.Titulo, L.ISBN,
@@ -142,9 +139,7 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // Reporte 2: Usuarios con más préstamos
-        // ── CORRECCIÓN: TotalMultas ahora suma también la multa estimada
-        //    de los préstamos activos vencidos, no solo las ya cobradas.
+        //Reporte 2: Usuarios con más préstamos
         public DataTable ReporteUsuariosMasPrestamos()
         {
             string query = @"SELECT U.DNI,
@@ -175,7 +170,6 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // Stats para dashboard del menú
         public DataTable ObtenerEstadisticas()
         {
             string query = @"SELECT

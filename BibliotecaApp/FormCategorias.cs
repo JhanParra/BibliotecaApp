@@ -22,7 +22,7 @@ namespace BibliotecaApp
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text)) { MessageBox.Show("Ingrese el nombre.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
 
-            // ── Validación de duplicado ──
+            //Validación de duplicado
             if (repositorio.Existe(txtNombre.Text))
             {
                 MessageBox.Show(
@@ -42,7 +42,7 @@ namespace BibliotecaApp
             if (selectedID == 0) { MessageBox.Show("Seleccione una categoría.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (string.IsNullOrWhiteSpace(txtNombre.Text)) { MessageBox.Show("Ingrese el nombre.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
 
-            // ── Validación de duplicado (excluyendo el propio registro) ──
+            //Validación de duplicado (excluyendo el propio registro)
             if (repositorio.Existe(txtNombre.Text, selectedID))
             {
                 MessageBox.Show(

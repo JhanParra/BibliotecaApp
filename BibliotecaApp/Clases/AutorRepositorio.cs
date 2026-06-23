@@ -61,9 +61,6 @@ namespace BibliotecaApp.Clases
                 return dt;
             }
         }
-
-        // ── Valida si ya existe un autor con el mismo Nombre + Apellido ──
-        // idExcluir: al editar, excluye el propio registro de la validación
         public bool Existe(string nombre, string apellido, int idExcluir = 0)
         {
             string query = @"SELECT COUNT(*) FROM AUTOR

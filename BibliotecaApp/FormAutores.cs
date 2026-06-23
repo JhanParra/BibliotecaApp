@@ -29,7 +29,7 @@ namespace BibliotecaApp
         {
             if (!Validar()) return;
 
-            // ── Validación de duplicado ──
+            //Validación de duplicado
             if (repositorio.Existe(txtNombre.Text, txtApellido.Text))
             {
                 MessageBox.Show(
@@ -49,7 +49,7 @@ namespace BibliotecaApp
             if (selectedID == 0) { MessageBox.Show("Seleccione un autor.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (!Validar()) return;
 
-            // ── Validación de duplicado (excluyendo el propio registro) ──
+            //Validación de duplicado (excluyendo el propio registro)
             if (repositorio.Existe(txtNombre.Text, txtApellido.Text, selectedID))
             {
                 MessageBox.Show(

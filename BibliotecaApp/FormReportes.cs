@@ -75,7 +75,6 @@ namespace BibliotecaApp
         {
             if (reporteActual == "fecha")
                 CargarReporteFecha();
-            // El reporte de "usuarios" no tiene columna Estado, no se filtra
         }
 
         //Exportar a Excel el contenido actual del DataGridView
@@ -111,14 +110,14 @@ namespace BibliotecaApp
             }
         }
 
-        //Lógica de exportación usando ClosedXML
+        //Lógica para usar ClosedXML
         private void ExportarDataGridViewAExcel(DataGridView grid, string rutaArchivo, string tituloHoja)
         {
             using (var workbook = new ClosedXML.Excel.XLWorkbook())
             {
                 var hoja = workbook.Worksheets.Add(string.IsNullOrWhiteSpace(tituloHoja) ? "Reporte" : tituloHoja.Substring(0, Math.Min(30, tituloHoja.Length)));
 
-                // Título arriba
+                //Título arriba
                 hoja.Cell(1, 1).Value = tituloHoja;
                 hoja.Cell(1, 1).Style.Font.Bold = true;
                 hoja.Cell(1, 1).Style.Font.FontSize = 14;
@@ -128,7 +127,7 @@ namespace BibliotecaApp
 
                 int filaInicio = 4;
 
-                // Encabezados
+                //Encabezados
                 for (int c = 0; c < grid.Columns.Count; c++)
                 {
                     var celda = hoja.Cell(filaInicio, c + 1);
@@ -138,7 +137,7 @@ namespace BibliotecaApp
                     celda.Style.Font.FontColor = ClosedXML.Excel.XLColor.White;
                 }
 
-                // Datos
+                //Datos
                 for (int f = 0; f < grid.Rows.Count; f++)
                 {
                     for (int c = 0; c < grid.Columns.Count; c++)

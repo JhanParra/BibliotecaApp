@@ -59,7 +59,7 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // Todos los libros activos (para FormLibros)
+        // Todos los libros activos
         public DataTable ObtenerTodos()
         {
             string query = @"SELECT L.libroID, L.ISBN, L.Titulo,
@@ -82,7 +82,7 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // Libros filtrados por categoría (para FormPrestamos)
+        //Libros filtrados por categoría para FormPrestamos
         public DataTable ObtenerPorCategoria(int categoriaID)
         {
             string query = @"SELECT L.libroID, L.Titulo, L.Stock
@@ -102,7 +102,7 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // ── Valida si ya existe un libro con el mismo ISBN ──
+        //Valida si ya existe un libro con el mismo ISBN
         public bool ExisteISBN(string isbn, string isbnExcluir = "")
         {
             string query = @"SELECT COUNT(*) FROM LIBRO
@@ -119,7 +119,6 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // ── Valida si ya existe un libro con el mismo Título (opcional, además del ISBN) ──
         public bool ExisteTitulo(string titulo, string isbnExcluir = "")
         {
             string query = @"SELECT COUNT(*) FROM LIBRO

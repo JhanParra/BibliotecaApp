@@ -29,7 +29,6 @@ namespace BibliotecaApp.Clases
         public ResultadoDevolucion MarcarDevuelto() => repositorio.MarcarDevuelto(this.PrestamoID);
     }
 
-    // Clase para retornar resultado de devolución con multa
     internal class ResultadoDevolucion
     {
         public bool Exito { get; set; }

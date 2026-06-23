@@ -59,8 +59,6 @@ namespace BibliotecaApp.Clases
                 return dt;
             }
         }
-
-        // ── Valida si ya existe una categoría con el mismo Nombre ──
         public bool Existe(string nombre, int idExcluir = 0)
         {
             string query = @"SELECT COUNT(*) FROM CATEGORIA

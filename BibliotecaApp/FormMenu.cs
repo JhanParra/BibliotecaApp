@@ -25,14 +25,14 @@ namespace BibliotecaApp
 
         private void CargarPanelBienvenida()
         {
-            // ── Panel principal blanco ────────────────────────
+            //Panel principal blanco
             Panel pnlBienvenida = new Panel();
             pnlBienvenida.Location = new Point(20, 255);
             pnlBienvenida.Size = new Size(pnlContenido.Width - 40, 280);
             pnlBienvenida.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             pnlBienvenida.BackColor = Color.White;
 
-            // ── Columna izquierda: Logo ───────────────────────
+            //Columna izquierda: Logo
             PictureBox picLogo = new PictureBox();
             picLogo.Location = new Point(20, 20);
             picLogo.Size = new Size(160, 160);
@@ -63,7 +63,7 @@ namespace BibliotecaApp
 
             if (picLogo.Image == null)
             {
-                // Si no hay imagen, mostrar emoji grande
+                //Si no hay imagen, mostrar emoji grande
                 Label lblEmoji = new Label();
                 lblEmoji.Text = "📚";
                 lblEmoji.Font = new Font("Segoe UI", 52F);
@@ -92,7 +92,7 @@ namespace BibliotecaApp
             lblSlogan.Location = new Point(200, 65);
             lblSlogan.Size = new Size(700, 25);
 
-            // Línea separadora
+            //Línea separadora
             Panel pnlLinea = new Panel();
             pnlLinea.Location = new Point(200, 98);
             pnlLinea.Size = new Size(700, 2);

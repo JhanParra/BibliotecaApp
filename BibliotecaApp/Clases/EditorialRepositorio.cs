@@ -60,7 +60,6 @@ namespace BibliotecaApp.Clases
             }
         }
 
-        // ── Valida si ya existe una editorial con el mismo Nombre ──
         public bool Existe(string nombre, int idExcluir = 0)
         {
             string query = @"SELECT COUNT(*) FROM EDITORIAL

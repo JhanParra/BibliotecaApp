@@ -48,7 +48,7 @@ namespace BibliotecaApp
         {
             if (!Validar()) return;
 
-            // ── Validación de ISBN duplicado ──
+            //Validación de ISBN duplicado
             if (libroRepo.ExisteISBN(txtISBN.Text))
             {
                 MessageBox.Show(
@@ -58,7 +58,7 @@ namespace BibliotecaApp
                 return;
             }
 
-            // ── Validación de Título duplicado ──
+            //Validación de Título duplicado
             if (libroRepo.ExisteTitulo(txtTitulo.Text))
             {
                 MessageBox.Show(
@@ -78,7 +78,7 @@ namespace BibliotecaApp
             if (string.IsNullOrEmpty(selectedISBN)) { MessageBox.Show("Seleccione un libro.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning); return; }
             if (!Validar()) return;
 
-            // ── Validación de ISBN duplicado (excluyendo el propio registro) ──
+            //Validación de ISBN duplicado (excluyendo el propio registro
             if (libroRepo.ExisteISBN(txtISBN.Text, selectedISBN))
             {
                 MessageBox.Show(
@@ -88,7 +88,7 @@ namespace BibliotecaApp
                 return;
             }
 
-            // ── Validación de Título duplicado (excluyendo el propio registro) ──
+            //Validación d Título duplicado (excluyendo el propio registro)
             if (libroRepo.ExisteTitulo(txtTitulo.Text, selectedISBN))
             {
                 MessageBox.Show(

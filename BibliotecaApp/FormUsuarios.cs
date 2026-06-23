@@ -43,7 +43,7 @@ namespace BibliotecaApp
         {
             if (!Validar()) return;
 
-            // ── Validación de DNI duplicado (solo al REGISTRAR, no al editar) ──
+            //Validación de DNI duplicado
             if (repositorio.ExisteDNI(txtDNI.Text))
             {
                 MessageBox.Show(
@@ -63,7 +63,7 @@ namespace BibliotecaApp
         {
             if (!Validar()) return;
 
-            // El DNI es la llave primaria, no se valida duplicado en edición porque no cambia.
+            //El DNI es la llave primaria no se valida duplicado en edición porque no cambia
             Usuario u = new Usuario(txtDNI.Text, txtNombre.Text.Trim(), txtApellido.Text.Trim(), txtTelefono.Text.Trim());
             if (u.Actualizar()) { MessageBox.Show("✅ Usuario actualizado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information); Limpiar(); Cargar(); }
             else MessageBox.Show("Error al actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -82,7 +82,7 @@ namespace BibliotecaApp
 
         private void btnLimpiar_Click(object sender, EventArgs e) => Limpiar();
 
-        // ── BÚSQUEDA: filtra desde la fuente de datos, sin tocar fila.Visible ──
+        //Búsqueda: filtra desde la fuente de datos
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
             string filtro = txtBuscar.Text.Trim().ToLower();
@@ -121,7 +121,7 @@ namespace BibliotecaApp
                 txtTelefono.Text = fila.Cells["Telefono"].Value?.ToString();
                 lblSeleccionado.Text = $"Seleccionado: {txtNombre.Text} {txtApellido.Text}";
 
-                // Bloquea el DNI al editar para que no se intente cambiar (es la PK)
+                //Bloquea el DNI al editar para que no se intente cambiar -> es la PK
                 modoEdicion = true;
                 txtDNI.ReadOnly = true;
             }

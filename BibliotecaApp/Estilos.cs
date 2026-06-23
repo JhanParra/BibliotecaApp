@@ -5,7 +5,7 @@ namespace BibliotecaApp
 {
     internal static class Estilos
     {
-        // ── Paleta de colores ──────────────────────────────
+        //Paleta de colores
         public static readonly Color Primario      = Color.FromArgb(26,  82,  118);  // azul oscuro
         public static readonly Color PrimarioClaro = Color.FromArgb(41,  128, 185);  // azul medio
         public static readonly Color Acento        = Color.FromArgb(23,  165, 137);  // verde azulado
@@ -17,14 +17,14 @@ namespace BibliotecaApp
         public static readonly Color TextoOscuro   = Color.FromArgb(44,  62,  80);   // casi negro
         public static readonly Color Borde         = Color.FromArgb(189, 195, 199);  // gris borde
 
-        // ── Fuentes ────────────────────────────────────────
+        //Fuentes
         public static readonly Font FuenteTitulo   = new Font("Segoe UI", 14F, FontStyle.Bold);
         public static readonly Font FuenteSubtitulo= new Font("Segoe UI", 11F, FontStyle.Bold);
         public static readonly Font FuenteNormal   = new Font("Segoe UI",  9F);
         public static readonly Font FuenteBoton    = new Font("Segoe UI",  9F, FontStyle.Bold);
         public static readonly Font FuentePequena  = new Font("Segoe UI",  8F);
 
-        // ── Aplicar estilo a botón primario ────────────────
+        //Aplicar estilo a botón primario
         public static void AplicarBotonPrimario(Button btn)
         {
             btn.BackColor = PrimarioClaro;
@@ -66,7 +66,7 @@ namespace BibliotecaApp
             btn.Cursor    = Cursors.Hand;
         }
 
-        // ── Aplicar estilo a DataGridView ──────────────────
+        //Aplicar estilo a DataGridView
         public static void AplicarEstiloGrid(DataGridView dgv)
         {
             dgv.BackgroundColor         = FondoPanel;
@@ -95,7 +95,7 @@ namespace BibliotecaApp
             dgv.AutoSizeColumnsMode     = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
-        // ── Panel de encabezado azul ───────────────────────
+        //Panel de encabezado azul
         public static Panel CrearPanelHeader(string titulo, int width)
         {
             Panel panel = new Panel
@@ -117,7 +117,7 @@ namespace BibliotecaApp
             return panel;
         }
 
-        // ── TextBox estilizado ─────────────────────────────
+        //TextBox estilizado
         public static void AplicarEstiloTextBox(TextBox txt)
         {
             txt.Font        = FuenteNormal;
@@ -126,7 +126,7 @@ namespace BibliotecaApp
             txt.ForeColor   = TextoOscuro;
         }
 
-        // ── ComboBox estilizado ────────────────────────────
+        //ComboBox estilizado
         public static void AplicarEstiloCombo(ComboBox cmb)
         {
             cmb.Font      = FuenteNormal;
